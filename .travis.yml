@@ -14,3 +14,11 @@ after_success:
   - docker build -t ghana7989/multi-nginx ./nginx
   - docker build -t ghana7989/multi-server ./server
   - docker build -t ghana7989/multi-worker ./worker
+  # Log in to the docker cli
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push them to docker hub
+  - docker push ghana7989/multi-client
+  - docker push ghana7989/multi-nginx
+  - docker push ghana7989/multi-server
+  - docker push ghana7989/multi-worker
+  - echo "Images pushed to docker hub"
