@@ -1,0 +1,16 @@
+sudo: required
+language: generic
+services:
+  - docker
+
+before_install:
+  - docker build -t ghana7989/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true ghana7989/react-test npm run test -- --coverage
+
+after_success:
+  - docker build -t ghana7989/multi-client ./client
+  - docker build -t ghana7989/multi-nginx ./nginx
+  - docker build -t ghana7989/multi-server ./server
+  - docker build -t ghana7989/multi-worker ./worker
